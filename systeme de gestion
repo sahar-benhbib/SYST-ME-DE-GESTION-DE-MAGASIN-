@@ -1,0 +1,106 @@
+produits = []
+clients = []
+ventes = []
+
+
+def ajouter_produit():
+    nom = input("Nom du produit: ")
+
+    if nom == "":
+        print(" Le nom ne peut pas être vide")
+        return
+
+   
+    for p in produits:
+        if p["nom"].lower() == nom.lower():
+            print(" Ce produit existe déjà")
+            return
+
+    try:
+        prix = float(input("Prix du produit: "))
+        stock = int(input("Stock disponible: "))
+
+        if prix <= 0:
+            print(" Le prix doit être > 0")
+            return
+
+        if stock < 0:
+            print(" Le stock doit être >= 0")
+            return
+
+    except ValueError:
+        print(" Erreur: veuillez entrer des nombres valides")
+        return
+
+    produit = {
+        "nom": nom,
+        "prix": prix,
+        "stock": stock,
+        "vendus": 0
+    }
+
+    produits.append(produit)
+
+    print(" Produit ajouté avec succès")
+
+
+def afficher_produits():
+
+    if len(produits) == 0:
+        print(" Aucun produit disponible")
+        return
+
+    print("\nNom | Prix | Stock | Vendus")
+    print("-" * 30)
+
+    for p in produits:
+
+        alerte = ""
+        if p["stock"] < 5:
+            alerte = " !!"
+
+        print(p["nom"], "|", p["prix"], "|", p["stock"], "|", p["vendus"], alerte)
+
+
+def rechercher_produit():
+
+    nom = input("Entrer le nom du produit à chercher: ")
+
+    for p in produits:
+        if p["nom"].lower() == nom.lower():
+            print(" Produit trouvé:")
+            print("Nom:", p["nom"])
+            print("Prix:", p["prix"])
+            print("Stock:", p["stock"])
+            print("Vendus:", p["vendus"])
+            return
+
+    print(" Produit non trouvé")
+
+
+
+while True:
+
+    print("\n MENU ")
+    print("1. Ajouter produit")
+    print("2. Afficher produits")
+    print("3. Rechercher produit")
+    print("4. Quitter")
+
+    choix = input("Choix: ")
+
+    if choix == "1":
+        ajouter_produit()
+
+    elif choix == "2":
+        afficher_produits()
+
+    elif choix == "3":
+        rechercher_produit()
+
+    elif choix == "4":
+        print("Au revoir ")
+        break
+
+    else:
+        print("Choix invalide")
